@@ -1,19 +1,10 @@
 from flask import Flask, request, jsonify
-from generate import generate
+from generate import password
 
-app = Flask(__name__)
+def tridit():
+    app = Flask(__name__)
+    app.register_blueprint(password, url_prefix='/')
+    return app
 
-password = generate()
-
-@app.route("/get-password")
-def send():
-    data = {
-        "obj": [{
-            "Password": password
-        }]
-    }
-
-    return jsonify(data), 200
-
-if __name__ == '__main__':
-    app.run(debug=True)
+app = tridit()
+app.run(debug=True)
